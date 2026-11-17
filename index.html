@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Força Fitness - Centro de Treinamento Corporativo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF6B00',
+                            orangeHover: '#E05E00',
+                            blue: '#1E3A8A',
+                            dark: '#0B0F19',
+                            card: '#111827',
+                            border: '#1F2937'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Efeito Ken Burns (zoom e movimento suave nas fotos/vídeos) */
+        @keyframes kenBurns {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.08) translate(-1%, -1%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+        .animate-ken-burns {
+            animation: kenBurns 15s ease-in-out infinite;
+        }
+        /* Transições Fade in / Fade out */
+        .fade-slide {
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-gray-100 antialiased selection:bg-brand-orange selection:text-white">
+
+    <!-- TopBar Informativa -->
+    <div class="bg-brand-blue border-b border-blue-900 text-xs py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-4">
+                <span><i class="fa-solid fa-location-dot text-brand-orange mr-1"></i> Av. das Amoreiras, Campinas - SP</span>
+                <span><i class="fa-solid fa-clock text-brand-orange mr-1"></i> Seg - Sáb: 06:00 - 23:00</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://wa.me/5519974090013" target="_blank" class="hover:text-brand-orange transition-colors">
+                    <i class="fa-brands fa-whatsapp text-brand-orange"></i> (19) 97409-0013
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-brand-dark/95 backdrop-blur-md border-b border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="Ff-26.jpg" alt="Força Fitness Logo" class="h-12 w-auto object-contain rounded border border-brand-orange/40 group-hover:border-brand-orange transition-all">
+                <div class="flex flex-col">
+                    <span class="text-xl font-black tracking-wider text-white uppercase">FORÇA <span class="text-brand-orange">FITNESS</span></span>
+                    <span class="text-[10px] text-gray-400 tracking-widest uppercase font-semibold">Treinamento Corporativo</span>
+                </div>
+            </a>
+
+            <!-- Menu Desktop -->
+            <nav class="hidden md:flex items-center gap-6 font-semibold text-sm">
+                <a href="#home" class="hover:text-brand-orange transition-colors">Início</a>
+                <a href="#modalidades" class="hover:text-brand-orange transition-colors">Modalidades</a>
+                <a href="#horarios" class="hover:text-brand-orange transition-colors">Grade & Horários</a>
+                <a href="#kits" class="text-brand-orange hover:text-white transition-colors flex items-center gap-1.5"><i class="fa-solid fa-gift"></i> Kits & Promoções</a>
+                <a href="#galeria" class="hover:text-brand-orange transition-colors">Galeria Dinâmica</a>
+                <a href="#matricula" class="hover:text-brand-orange transition-colors">Matrícula Online</a>
+                <a href="#contato" class="hover:text-brand-orange transition-colors">Localização</a>
+            </nav>
+
+            <!-- Botão WhatsApp CTA -->
+            <div class="hidden lg:flex items-center">
+                <a href="https://wa.me/5519974090013?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20os%20planos%20da%20Força%20Fitness." target="_blank" class="bg-brand-orange hover:bg-brand-orangeHover text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-brand-orange/20 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Fale no WhatsApp
+                </a>
+            </div>
+
+            <!-- Botão Menu Mobile -->
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-gray-300 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Menu Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-card border-b border-brand-border px-6 py-4 space-y-3">
+            <a href="#home" class="block text-sm font-semibold hover:text-brand-orange">Início</a>
+            <a href="#modalidades" class="block text-sm font-semibold hover:text-brand-orange">Modalidades</a>
+            <a href="#horarios" class="block text-sm font-semibold hover:text-brand-orange">Grade & Horários</a>
+            <a href="#kits" class="block text-sm font-semibold text-brand-orange"><i class="fa-solid fa-gift mr-1"></i> Kits & Promoções</a>
+            <a href="#galeria" class="block text-sm font-semibold hover:text-brand-orange">Galeria Dinâmica</a>
+            <a href="#matricula" class="block text-sm font-semibold hover:text-brand-orange">Matrícula Online</a>
+            <a href="#contato" class="block text-sm font-semibold hover:text-brand-orange">Localização</a>
+            <div class="pt-2">
+                <a href="https://wa.me/5519974090013" target="_blank" class="w-full bg-brand-orange text-white py-2.5 rounded-xl font-bold text-center block shadow-md">
+                    <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp (19) 97409-0013
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section / Carrossel Dinâmico de Fotos e Vídeos -->
+    <section id="home" class="relative h-[85vh] min-h-[550px] flex items-center justify-center overflow-hidden bg-brand-dark">
+        <!-- Slides Container -->
+        <div id="hero-carousel" class="absolute inset-0 w-full h-full z-0">
+            <!-- Slide 1: Foto Aca2 -->
+            <div class="hero-slide absolute inset-0 opacity-100 transition-opacity duration-1000">
+                <img src="aca2.jpg" class="w-full h-full object-cover animate-ken-burns filter brightness-75" alt="Academia Força Fitness">
+            </div>
+            <!-- Slide 2: Vídeo 1 -->
+            <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover filter brightness-75">
+                    <source src="video1.mp4" type="video/mp4">
+                </video>
+            </div>
+            <!-- Slide 3: Foto Aca-3 -->
+            <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+                <img src="aca-3.jpg" class="w-full h-full object-cover animate-ken-burns filter brightness-75" alt="Treinamento Funcional">
+            </div>
+            <!-- Slide 4: Vídeo 2 -->
+            <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+                <video autoplay muted loop playsinline class="w-full h-full object-cover filter brightness-75">
+                    <source src="video2.mp4" type="video/mp4">
+                </video>
+            </div>
+            <!-- Slide 5: Foto Aca1 -->
+            <div class="hero-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+                <img src="aca1.jpg" class="w-full h-full object-cover animate-ken-burns filter brightness-75" alt="Musculação de Alta Performance">
+            </div>
+        </div>
+
+        <!-- Overlay Gradiente -->
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent z-10"></div>
+
+        <!-- Conteúdo do Hero -->
+        <div class="relative z-20 max-w-5xl mx-auto px-4 text-center space-y-6">
+            <div class="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/50 px-4 py-1.5 rounded-full text-brand-orange text-xs font-bold tracking-widest uppercase backdrop-blur-md">
+                <i class="fa-solid fa-bolt"></i> Centro de Treinamento de Alta Performance
+            </div>
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white uppercase tracking-tight">
+                FORÇA <span class="text-brand-orange">FITNESS</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto font-medium">
+                Estrutura de ponta na Av. das Amoreiras, Campinas. Supere seus limites corporativos com equipamentos de última geração, natação, lutas e acompanhamento profissional.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <a href="#matricula" class="w-full sm:w-auto bg-brand-orange hover:bg-brand-orangeHover text-white px-8 py-4 rounded-xl font-extrabold shadow-xl shadow-brand-orange/30 transition-all transform hover:-scale-105 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rocket"></i> Matrícula Imediata
+                </a>
+                <a href="#kits" class="w-full sm:w-auto bg-brand-card/80 hover:bg-brand-card text-white border border-brand-border px-8 py-4 rounded-xl font-extrabold backdrop-blur-md transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-gift text-brand-orange"></i> Ver Kits Promocionais
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Modalidades -->
+    <section id="modalidades" class="py-20 bg-brand-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-brand-orange uppercase">Nossas Atividades</h2>
+                <h3 class="text-3xl sm:text-4xl font-black uppercase text-white">Modalidades Completas</h3>
+                <div class="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-6 hover:border-brand-orange transition-all duration-300 group shadow-lg">
+                    <div class="h-48 rounded-xl overflow-hidden mb-6 relative">
+                        <img src="aca1.jpg" alt="Musculação" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-card to-transparent opacity-80"></div>
+                        <span class="absolute bottom-3 left-3 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-lg">Principal</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-brand-orange transition-colors">Musculação Corporativa</h4>
+                    <p class="text-gray-400 text-sm mb-4">Área ampla equipada com máquinas biomecânicas avançadas, pesos livres e assessoria de personal trainers dedicados.</p>
+                    <a href="#matricula" class="text-brand-orange font-semibold text-sm flex items-center gap-1 hover:underline">Agendar aula experimental <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-6 hover:border-brand-orange transition-all duration-300 group shadow-lg">
+                    <div class="h-48 rounded-xl overflow-hidden mb-6 relative">
+                        <img src="aca4.jpg" alt="Natação" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-card to-transparent opacity-80"></div>
+                        <span class="absolute bottom-3 left-3 bg-brand-blue text-white text-xs font-bold px-3 py-1 rounded-lg">Aquático</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-brand-orange transition-colors">Natação & Hidroginástica</h4>
+                    <p class="text-gray-400 text-sm mb-4">Piscina semiolímpica coberta e aquecida, com tratamento de ozônio e aulas para todas as faixas etárias e níveis.</p>
+                    <a href="#matricula" class="text-brand-orange font-semibold text-sm flex items-center gap-1 hover:underline">Agendar aula experimental <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-6 hover:border-brand-orange transition-all duration-300 group shadow-lg">
+                    <div class="h-48 rounded-xl overflow-hidden mb-6 relative">
+                        <img src="aca-3.jpg" alt="Lutas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-card to-transparent opacity-80"></div>
+                        <span class="absolute bottom-3 left-3 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-lg">Combate</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2 group-hover:text-brand-orange transition-colors">Centro de Lutas (Jiu-Jitsu, Muay Thai & Boxe)</h4>
+                    <p class="text-gray-400 text-sm mb-4">Tatame olímpico profissional e estrutura de ringue para treinos de defesa pessoal, condicionamento e alta competição.</p>
+                    <a href="#matricula" class="text-brand-orange font-semibold text-sm flex items-center gap-1 hover:underline">Agendar aula experimental <i class="fa-solid fa-arrow-right text-xs"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Kits Promocionais & Materiais (Solicitado) -->
+    <section id="kits" class="py-20 bg-brand-card/50 border-y border-brand-border relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-brand-orange uppercase">Exclusividade Força Fitness</h2>
+                <h3 class="text-3xl sm:text-4xl font-black uppercase text-white">Kits & Promoções Corporativas</h3>
+                <p class="text-gray-400 max-w-xl mx-auto text-sm">Conheça nossos pacotes exclusivos de materiais, suplementação e acessórios oficiais para maximizar sua performance com identidade visual corporativa.</p>
+                <div class="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Grid de Kits -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Kit 1 -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden shadow-xl group hover:border-brand-orange transition-all">
+                    <div class="h-64 overflow-hidden bg-gray-900 relative">
+                        <img src="kit.png" alt="Kit Promocional 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 right-3 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Kit Principal</div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h4 class="text-xl font-bold text-white">Kit Recepção & Nutrição</h4>
+                        <p class="text-gray-400 text-sm">Estrutura completa com balcão executivo, área de shakes proteicos, cardápio de nutrição e suporte de alta performance para novos membros.</p>
+                        <div class="pt-4 flex items-center justify-between border-t border-brand-border">
+                            <span class="text-brand-orange font-extrabold text-lg">Incluso nos Planos Black</span>
+                            <a href="https://wa.me/5519974090013?text=Olá,%20quero%20garantir%20o%20Kit%20Recepção%20&%20Nutrição." target="_blank" class="bg-brand-orange hover:bg-brand-orangeHover text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">Garantir Kit</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kit 2 -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden shadow-xl group hover:border-brand-orange transition-all">
+                    <div class="h-64 overflow-hidden bg-gray-900 relative">
+                        <img src="kit2.png" alt="Kit Promocional 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 right-3 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Kit 2</div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h4 class="text-xl font-bold text-white">Kit Hidratação & Marmitas Fit</h4>
+                        <p class="text-gray-400 text-sm">Composto por coqueteleira térmica de alta vedação, copo executivo e marmita hermética personalizada com isolamento de alto teor proteico.</p>
+                        <div class="pt-4 flex items-center justify-between border-t border-brand-border">
+                            <span class="text-brand-orange font-extrabold text-lg">Exclusivo Membros</span>
+                            <a href="https://wa.me/5519974090013?text=Olá,%20quero%20garantir%20o%20Kit%20Hidratação%20&%20Marmitas." target="_blank" class="bg-brand-orange hover:bg-brand-orangeHover text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">Garantir Kit</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kit 3 -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden shadow-xl group hover:border-brand-orange transition-all">
+                    <div class="h-64 overflow-hidden bg-gray-900 relative">
+                        <img src="kit3.png" alt="Kit Promocional 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-3 right-3 bg-brand-orange text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Kit 3</div>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h4 class="text-xl font-bold text-white">Kit Têxtil & Acesso VIP</h4>
+                        <p class="text-gray-400 text-sm">Kit composto por camisa Dry-Fit oficial, top esportivo de alta sustentação, bolsa executiva impermeável e crachá de acesso corporativo VIP.</p>
+                        <div class="pt-4 flex items-center justify-between border-t border-brand-border">
+                            <span class="text-brand-orange font-extrabold text-lg">Edição Limitada</span>
+                            <a href="https://wa.me/5519974090013?text=Olá,%20quero%20garantir%20o%20Kit%20Têxtil%20&%20Acesso%20VIP." target="_blank" class="bg-brand-orange hover:bg-brand-orangeHover text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">Garantir Kit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Horários & Agenda de Serviços -->
+    <section id="horarios" class="py-20 bg-brand-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-brand-orange uppercase">Organização Semanal</h2>
+                <h3 class="text-3xl sm:text-4xl font-black uppercase text-white">Grade de Horários & Serviços</h3>
+                <p class="text-gray-400 text-sm max-w-xl mx-auto">Consulte os horários disponíveis para musculação, natação, lutas e demais serviços especializados.</p>
+                <div class="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Tabela de Grade de Horários -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl overflow-hidden shadow-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-brand-blue text-white text-xs uppercase tracking-wider">
+                                <th class="p-4">Horário</th>
+                                <th class="p-4">Segunda / Quarta</th>
+                                <th class="p-4">Terça / Quinta</th>
+                                <th class="p-4">Sexta-feira</th>
+                                <th class="p-4">Sábado</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-brand-border text-sm text-gray-300">
+                            <tr class="hover:bg-brand-border/30">
+                                <td class="p-4 font-bold text-brand-orange">06:00 - 08:00</td>
+                                <td class="p-4">Musculação / Natação</td>
+                                <td class="p-4">Musculação / Funcional</td>
+                                <td class="p-4">Musculação / Natação</td>
+                                <td class="p-4">Musculação Livre</td>
+                            </tr>
+                            <tr class="hover:bg-brand-border/30">
+                                <td class="p-4 font-bold text-brand-orange">08:00 - 12:00</td>
+                                <td class="p-4">Treinamento Personalizado</td>
+                                <td class="p-4">Hidroginástica / Natação</td>
+                                <td class="p-4">Treinamento Personalizado</td>
+                                <td class="p-4">Aulões Especiais</td>
+                            </tr>
+                            <tr class="hover:bg-brand-border/30">
+                                <td class="p-4 font-bold text-brand-orange">14:00 - 18:00</td>
+                                <td class="p-4">Musculação & Avaliação</td>
+                                <td class="p-4">Musculação & Avaliação</td>
+                                <td class="p-4">Musculação & Avaliação</td>
+                                <td class="p-4">Natação Infantil</td>
+                            </tr>
+                            <tr class="hover:bg-brand-border/30">
+                                <td class="p-4 font-bold text-brand-orange">18:00 - 20:00</td>
+                                <td class="p-4">Muay Thai / Natação</td>
+                                <td class="p-4">Jiu-Jitsu / Funcional</td>
+                                <td class="p-4">Boxe / Natação</td>
+                                <td class="p-4">Encerramento 14h</td>
+                            </tr>
+                            <tr class="hover:bg-brand-border/30">
+                                <td class="p-4 font-bold text-brand-orange">20:00 - 23:00</td>
+                                <td class="p-4">Musculação Noturna</td>
+                                <td class="p-4">Musculação Noturna</td>
+                                <td class="p-4">Musculação Noturna</td>
+                                <td class="p-4">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria Dinâmica (Fotos e Vídeos em Movimento Rápido) -->
+    <section id="galeria" class="py-20 bg-brand-card/30 border-y border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-brand-orange uppercase">Energia em Movimento</h2>
+                <h3 class="text-3xl sm:text-4xl font-black uppercase text-white">Carrossel de Vídeos & Imagens</h3>
+                <p class="text-gray-400 text-sm">Acompanhe a atmosfera enérgica, moderna e corporativa da nossa estrutura em Campinas.</p>
+                <div class="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Grade de Mídia Dinâmica -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Mídia 1 (Vídeo 3) -->
+                <div class="relative rounded-2xl overflow-hidden h-64 border border-brand-border group shadow-lg">
+                    <video autoplay muted loop playsinline class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <source src="video3.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <span class="text-white font-bold text-sm"><i class="fa-solid fa-play text-brand-orange mr-2"></i> Treino Funcional Dinâmico</span>
+                    </div>
+                </div>
+
+                <!-- Mídia 2 (Foto aca2) -->
+                <div class="relative rounded-2xl overflow-hidden h-64 border border-brand-border group shadow-lg">
+                    <img src="aca2.jpg" alt="Estrutura Interna" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <span class="text-white font-bold text-sm"><i class="fa-solid fa-camera text-brand-orange mr-2"></i> Área de Musculação Completa</span>
+                    </div>
+                </div>
+
+                <!-- Mídia 3 (Vídeo 4) -->
+                <div class="relative rounded-2xl overflow-hidden h-64 border border-brand-border group shadow-lg">
+                    <video autoplay muted loop playsinline class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <source src="video4.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <span class="text-white font-bold text-sm"><i class="fa-solid fa-play text-brand-orange mr-2"></i> Alta Performance & Cardio</span>
+                    </div>
+                </div>
+
+                <!-- Mídia 4 (Foto aca4) -->
+                <div class="relative rounded-2xl overflow-hidden h-64 border border-brand-border group shadow-lg">
+                    <img src="aca4.jpg" alt="Spinning" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <span class="text-white font-bold text-sm"><i class="fa-solid fa-camera text-brand-orange mr-2"></i> Sala de Indoor Cycling</span>
+                    </div>
+                </div>
+
+                <!-- Mídia 5 (Vídeo 5) -->
+                <div class="relative rounded-2xl overflow-hidden h-64 border border-brand-border group shadow-lg">
+                    <video autoplay muted loop playsinline class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <source src="video5.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <span class="text-white font-bold text-sm"><i class="fa-solid fa-play text-brand-orange mr-2"></i> Foco e Disciplina Corporativa</span>
+                    </div>
+                </div>
+
+                <!-- Mídia 6 (Foto aca1) -->
+                <div class="relative rounded-2xl overflow-hidden h-64 border border-brand-border group shadow-lg">
+                    <img src="aca1.jpg" alt="Acompanhamento" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                        <span class="text-white font-bold text-sm"><i class="fa-solid fa-camera text-brand-orange mr-2"></i> Acompanhamento Dedicado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Matrícula & Agendamento (Formulário para novos clientes) -->
+    <section id="matricula" class="py-20 bg-brand-dark relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-brand-card border border-brand-border rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-brand-orange/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="text-center space-y-3 mb-10">
+                    <h2 class="text-xs font-bold tracking-widest text-brand-orange uppercase">Faça Parte</h2>
+                    <h3 class="text-3xl font-black uppercase text-white">Formulário de Nova Matrícula & Agendamento</h3>
+                    <p class="text-gray-400 text-sm">Preencha seus dados para garantir sua vaga, agendar serviços ou solicitar seu kit promocional.</p>
+                </div>
+
+                <form id="matricula-form" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Nome Completo</label>
+                            <input type="text" required class="w-full bg-brand-dark border border-brand-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors" placeholder="Ex: Carlos Eduardo">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-300 mb-2">WhatsApp / Telefone</label>
+                            <input type="tel" required class="w-full bg-brand-dark border border-brand-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors" placeholder="Ex: (19) 99999-9999" value="(19) 97409-0013">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Serviço / Modalidade Desejada</label>
+                            <select class="w-full bg-brand-dark border border-brand-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors">
+                                <option>Musculação Corporativa</option>
+                                <option>Natação / Hidroginástica</option>
+                                <option>Centro de Lutas (Jiu-Jitsu / Muay Thai)</option>
+                                <option>Treinamento Funcional / Pilates</option>
+                                <option>Kit Completo & Promoções</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Horário Preferido</label>
+                            <select class="w-full bg-brand-dark border border-brand-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors">
+                                <option>Manhã (06:00 - 12:00)</option>
+                                <option>Tarde (12:00 - 18:00)</option>
+                                <option>Noite (18:00 - 23:00)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Mensagem ou Observações</label>
+                        <textarea rows="4" class="w-full bg-brand-dark border border-brand-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-orange transition-colors" placeholder="Informe se possui alguma dúvida ou se deseja incluir algum kit promocional..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-orange hover:bg-brand-orangeHover text-white py-4 rounded-xl font-extrabold uppercase tracking-wider shadow-xl shadow-brand-orange/30 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Enviar Solicitação via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Localização & Google Maps -->
+    <section id="contato" class="py-20 bg-brand-card/40 border-t border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-brand-orange uppercase">Onde Estamos</h2>
+                <h3 class="text-3xl sm:text-4xl font-black uppercase text-white">Venha Conhecer a Força Fitness</h3>
+                <p class="text-gray-400 text-sm">Av. das Amoreiras, Campinas - SP. Fácil acesso e estacionamento exclusivo.</p>
+                <div class="w-20 h-1 bg-brand-orange mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <!-- Informações -->
+                <div class="space-y-6 bg-brand-card border border-brand-border p-8 rounded-2xl shadow-xl">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-brand-orange/20 rounded-xl flex items-center justify-center text-brand-orange text-xl shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-lg">Endereço Principal</h4>
+                            <p class="text-gray-400 text-sm">Av. das Amoreiras - Campinas, SP</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-brand-orange/20 rounded-xl flex items-center justify-center text-brand-orange text-xl shrink-0">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-lg">Atendimento & WhatsApp</h4>
+                            <p class="text-gray-400 text-sm">(19) 97409-0013</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-brand-orange/20 rounded-xl flex items-center justify-center text-brand-orange text-xl shrink-0">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-lg">Horário de Funcionamento</h4>
+                            <p class="text-gray-400 text-sm">Segunda a Sábado: 06:00 às 23:00</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <a href="https://wa.me/5519974090013" target="_blank" class="w-full bg-brand-orange hover:bg-brand-orangeHover text-white py-3.5 rounded-xl font-bold text-center block shadow-lg transition-all">
+                            <i class="fa-brands fa-whatsapp mr-2"></i> Chamar no WhatsApp Agora
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Google Maps Embed -->
+                <div class="lg:col-span-2 h-[400px] rounded-2xl overflow-hidden border border-brand-border shadow-2xl">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3675.312948684725!2d-47.0814!3d-22.9056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c8c630f5a7a7a7%3A0x7d6f5f5f5f5f5f5f!2sAv.%20das%20Amoreiras%20-%20Campinas%2C%20SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark border-t border-brand-border py-12 text-gray-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <img src="Ff-26.jpg" alt="Logo" class="h-10 w-auto object-contain rounded border border-brand-orange/40">
+                <span class="font-bold text-white uppercase tracking-wider">Força Fitness</span>
+            </div>
+            <p class="text-center md:text-left text-xs">
+                © 2026 Força Fitness - Centro de Treinamento Corporativo. Todos os direitos reservados. Av. das Amoreiras, Campinas - SP.
+            </p>
+            <div class="flex items-center gap-4 text-lg">
+                <a href="https://wa.me/5519974090013" target="_blank" class="hover:text-brand-orange transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#" class="hover:text-brand-orange transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-brand-orange transition-colors"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de Interatividade (Carrossel Hero e Menu Mobile) -->
+    <script>
+        // Menu Mobile Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Carrossel Automático Hero (Fotos e Vídeos em Movimento Rápido)
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].style.opacity = '0';
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].style.opacity = '1';
+            
+            // Se houver vídeo, dar play
+            const video = slides[currentSlide].querySelector('video');
+            if (video) {
+                video.currentTime = 0;
+                video.play();
+            }
+        }
+
+        // Troca rápida a cada 4.5 segundos
+        if (slides.length > 0) {
+            setInterval(nextSlide, 4500);
+        }
+
+        // Formulário de Matrícula -> Redirecionamento Direto WhatsApp
+        document.getElementById('matricula-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nome = this.querySelector('input[type="text"]').value;
+            const telefone = this.querySelectorAll('input[type="tel"]')[0].value;
+            const modalidade = this.querySelector('select').value;
+            
+            const texto = `Olá! Meu nome é *${nome}* (${telefone}). Gostaria de realizar minha matrícula/agendamento para a modalidade: *${modalidade}*.`;
+            const url = `https://wa.me/5519974090013?text=${encodeURIComponent(texto)}`;
+            window.open(url, '_blank');
+        });
+    </script>
+</body>
+</html>
